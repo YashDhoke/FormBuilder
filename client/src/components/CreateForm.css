@@ -12,7 +12,7 @@
 .add-input-button{
     color : rgb(77, 149, 222) ; 
     border-color: rgb(77, 149, 222) ;
-    max-width: 150px;
+    max-width: 250px;
 }
 
 .submit-button{
@@ -45,7 +45,7 @@
     margin-left: 20px;
 }
 
-.input-box{
+.input-box-right-side{
     border : none ;
     border-bottom: 2px solid black; 
     outline: none;            
@@ -69,6 +69,49 @@
     color: white;
     max-width: 150px;
  }
+
+ .input-box-container {
+    margin-top: 20px; /* Reduce margin to bring boxes closer to the heading */
+    display: flex;
+    flex-wrap: wrap;  /* Allow the boxes to wrap if they exceed the container's width */
+    gap: 10px;  /* Add space between the boxes */
+}
+
+.input-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d3d3d3;
+    padding: 10px;
+    border-radius: 5px;
+    width: 250px;  /* Adjust width of the box */
+}
+
+.input-box p {
+    margin: 0;
+    flex-grow: 1; /* Keeps text aligned left and flexible */
+}
+
+.edit-button, .delete-button {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #ff6347;
+    color: white;
+}
+
+.edit-button:hover, .delete-button:hover {
+    opacity: 0.8;
+}
+
+
+
+
 
 
 
