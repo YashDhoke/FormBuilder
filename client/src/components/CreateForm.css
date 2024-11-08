@@ -1,0 +1,79 @@
+.container {
+    display: flex;
+    justify-content: center;  
+    align-items: flex-start;  
+    height: 100%;           
+    width: 100%;              
+    position: absolute;      
+    top: 0;
+    left: 0;
+}
+
+.add-input-button{
+    color : rgb(77, 149, 222) ; 
+    border-color: rgb(77, 149, 222) ;
+    max-width: 150px;
+}
+
+.submit-button{
+    margin-top: 20px; 
+    background-color: rgb(3, 106, 3);
+    color: white;
+    max-width: 90px;
+    padding: 10px;
+}
+
+.second-container {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    border: 2px solid lightgray;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;               /* Set the width of the container to 80% */
+    margin: 0 auto;           /* Center the container horizontally */
+ }
+ 
+.content {
+    width: 100%;
+    text-align: center;  /* Center text */
+}
+
+.edit-button{
+    height: 50px; 
+    width: 50px; 
+    margin-left: 20px;
+}
+
+.input-box{
+    border : none ;
+    border-bottom: 2px solid black; 
+    outline: none;            
+    padding: 5px 0;          
+    font-size: 16px;   
+}
+
+.second-container > div {
+    display: flex;
+    flex-direction: column; 
+ }
+ 
+ .second-container > div:nth-child(2) {
+    border-left: 2px solid lightgray;  
+    
+ }
+
+ .create-form-button{
+    margin-top: 20px; 
+    background-color: rgb(3, 106, 3);
+    color: white;
+    max-width: 150px;
+ }
+
+
+
+
+
+
+
+
