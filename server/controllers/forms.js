@@ -36,3 +36,16 @@ exports.updateForm = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.deleteForm = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const form = await Form.findByIdAndDelete(id);
+    if (!form) {
+      return res.status(404).json({ message: 'Form not found' });
+    }
+    res.status(200).json({ message: 'Form deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

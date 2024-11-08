@@ -1,0 +1,55 @@
+
+
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    color: #999;
+    pointer-events: none;
+}
+
+.input-label.focused {
+    top: -10px;
+    left: 5px;
+    font-size: 12px;
+    color: #333;
+}
+
+.input-field:focus {
+    border-color: #4d90fe;
+    outline: none;
+}
+
+.form-detail-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; 
+}
+
+.form-button{
+    width: 150px;  
+    background-color: rgb(15, 139, 15);
+    color : white
+}

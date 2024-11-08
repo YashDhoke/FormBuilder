@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const formSchema = new mongoose.Schema({
-    title: String,
+    title: {
+        type: String,
+        required: true,
+        default: "Untitled Form",
+    },
     inputs: [
         {
             type: {
@@ -9,8 +13,8 @@ const formSchema = new mongoose.Schema({
                 enum: ['email', 'text', 'password', 'number', 'date'],
                 required: true,
             },
-            title: String,
-            placeholder: String,
+            title: String,  
+            placeholder: String, 
             readOnly: { type: Boolean, default: true },
         },
     ],
