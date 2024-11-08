@@ -5,32 +5,30 @@ export const CreateForm = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [formTitle, setFormTitle] = useState('Untitled Form');
     const [showInputTypes, setShowInputTypes] = useState(false);
-    const [inputFields, setInputFields] = useState([]); 
-    const [editingFieldId, setEditingFieldId] = useState(null); 
+    const [inputFields, setInputFields] = useState([]);
+    const [editingFieldId, setEditingFieldId] = useState(null);
     const formEditorInputRef = useRef(null);
     const [showPlaceholderInput, setShowPlaceholderInput] = useState(false);
     const [placeholderValue, setPlaceholderValue] = useState("");
-    const [inputFieldValues, setInputFieldValues] = useState({});
+    const [submitStatus, setSubmitStatus] = useState('');  
 
     const handleEditClick = () => {
         setIsEditing(true);
-        setPlaceholderValue(""); 
+        setPlaceholderValue("");
         if (formEditorInputRef.current) {
-            formEditorInputRef.current.focus(); 
+            formEditorInputRef.current.focus();
         }
         setShowPlaceholderInput(false);
     };
 
     const handleChangeClick = (id) => {
-        setShowPlaceholderInput(true);  
-        setEditingFieldId(id);          
-        setPlaceholderValue("");       
-    
+        setShowPlaceholderInput(true);
+        setEditingFieldId(id);
+        const field = inputFields.find(field => field.id === id);
+        setPlaceholderValue(field?.placeholder || "");
+        
         if (formEditorInputRef.current) {
-            formEditorInputRef.current.value = ''; 
-        }
-    
-        if (formEditorInputRef.current) {
+            formEditorInputRef.current.value = '';
             formEditorInputRef.current.focus();
         }
     };
@@ -39,16 +37,11 @@ export const CreateForm = () => {
         if (showPlaceholderInput) {
             const updatedFields = inputFields.map((field) => {
                 if (field.id === editingFieldId) {
-                    return { ...field, label: e.target.value }; 
+                    return { ...field, label: e.target.value };
                 }
                 return field;
             });
-            setInputFields(updatedFields); 
-
-            setInputFieldValues((prevValues) => ({
-                ...prevValues,
-                [editingFieldId]: e.target.value,
-            }));
+            setInputFields(updatedFields);
         } else {
             setFormTitle(e.target.value);
         }
@@ -59,40 +52,61 @@ export const CreateForm = () => {
     };
 
     const handleAddField = (type) => {
-        const newField = { id: Date.now(), type: type, label: type }; 
+        const newField = { id: Date.now(), type: type, label: type, placeholder: "" };
         setInputFields((prevFields) => [...prevFields, newField]);
-        setInputFieldValues((prevValues) => ({
-            ...prevValues,
-            [newField.id]: "" 
-        }));
-
         setShowInputTypes(false);
     };
 
     const handleDeleteField = (id) => {
         setInputFields((prevFields) => prevFields.filter(field => field.id !== id));
-        
-        setInputFieldValues((prevValues) => {
-            const newValues = { ...prevValues };
-            delete newValues[id];
-            return newValues;
-        });
     };
 
     const handleFieldChange = (e, id) => {
         const updatedFields = inputFields.map((field) => {
             if (field.id === id) {
-                return { ...field, value: e.target.value };
+                return { ...field, placeholder: e.target.value };
             }
             return field;
         });
         setInputFields(updatedFields);
-        
-        setInputFieldValues((prevValues) => ({
-            ...prevValues,
-            [id]: e.target.value 
-        }));
     };
+
+    const handleSubmit = () => {
+        const updatedFields = inputFields.map((field) => {
+            if (field.id === editingFieldId) {
+                return { ...field, placeholder: placeholderValue };
+            }
+            return field;
+        });
+        setInputFields(updatedFields);
+        setShowPlaceholderInput(false);
+    };
+
+    const handleCreateForm = async () => {
+        const formData = { title: formTitle || 'Untitled Form', inputs: inputFields.map(field => ({ type: field.type.toLowerCase(), title: field.label, placeholder: field.placeholder || "", readOnly: true })) };
+    
+        console.log("Sending formData:", formData);
+    
+        try {
+            const response = await fetch("http://localhost:3000/api/forms/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Response from server:", data); 
+                setSubmitStatus('Form created successfully!');  
+            } else {
+                console.error("Failed to create form", response.status); 
+                setSubmitStatus('Failed to create form.');  
+            }
+        } catch (error) {
+            console.error("Error creating form:", error);
+            setSubmitStatus('Error creating form.');  
+        }
+    };    
 
     return (
         <div className='container'>
@@ -146,7 +160,7 @@ export const CreateForm = () => {
                             </div>
                         )}
 
-                        <button className='submit-button'>SUBMIT</button>
+                        <button className='submit-button' onClick={handleSubmit}>SUBMIT</button>
                     </div>
 
                     <div style={{ marginLeft: "50px" }}>
@@ -174,8 +188,9 @@ export const CreateForm = () => {
                     </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                    <button className="create-form-button">Create Form</button>
+                    <button className="create-form-button" onClick={handleCreateForm}>Create Form</button>
                 </div>
+                {submitStatus && <p>{submitStatus}</p>} 
             </div>
         </div>
     );
