@@ -10,7 +10,7 @@ const formRoutes = require('./routes/forms');
 
 app.use(cors({
   origin: 'http://localhost:5173', // Allow requests from your frontend
-  methods: ['GET', 'POST', 'PUT'], // Allowed methods
+  methods: ['GET', 'POST', 'PUT','DELETE'], // Allowed methods
 }));
 
 app.use(express.json());

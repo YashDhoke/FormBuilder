@@ -40,6 +40,7 @@ exports.updateForm = async (req, res) => {
 exports.deleteForm = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log('Deleting form with ID:', id);  
     const form = await Form.findByIdAndDelete(id);
     if (!form) {
       return res.status(404).json({ message: 'Form not found' });

@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './CreateForm.css';
 
 export const CreateForm = () => {
@@ -11,6 +12,7 @@ export const CreateForm = () => {
     const [showPlaceholderInput, setShowPlaceholderInput] = useState(false);
     const [placeholderValue, setPlaceholderValue] = useState("");
     const [submitStatus, setSubmitStatus] = useState('');  
+    const navigate = useNavigate(); 
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -83,7 +85,7 @@ export const CreateForm = () => {
     };
 
     const handleCreateForm = async () => {
-        const formData = { title: formTitle || 'Untitled Form', inputs: inputFields.map(field => ({ type: field.type.toLowerCase(), title: field.label, placeholder: field.placeholder || "", readOnly: true })) };
+        const formData = { title: formTitle || 'Untitled Form', inputs: inputFields.map(field => ({ type: field.type.toLowerCase(), title: field.label, placeholder: field.placeholder || ""})) };
     
         console.log("Sending formData:", formData);
     
@@ -97,16 +99,18 @@ export const CreateForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 console.log("Response from server:", data); 
-                setSubmitStatus('Form created successfully!');  
+                setSubmitStatus('Form created successfully!');
+                
+                navigate("/"); 
             } else {
                 console.error("Failed to create form", response.status); 
-                setSubmitStatus('Failed to create form.');  
+                setSubmitStatus('Failed to create form.');
             }
         } catch (error) {
             console.error("Error creating form:", error);
-            setSubmitStatus('Error creating form.');  
+            setSubmitStatus('Error creating form.');
         }
-    };    
+    };
 
     return (
         <div className='container'>

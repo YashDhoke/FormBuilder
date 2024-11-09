@@ -1,0 +1,114 @@
+.container {
+    display: flex;
+    justify-content: center;  
+    align-items: flex-start;  
+    height: 100%;           
+    width: 100%;              
+    position: absolute;      
+    top: 0;
+    left: 0;
+}
+
+.add-input-button {
+    color : rgb(77, 149, 222); 
+    border-color: rgb(77, 149, 222);
+    max-width: 250px;
+}
+
+.submit-button {
+    margin-top: 20px; 
+    background-color: rgb(3, 106, 3);
+    color: white;
+    max-width: 150px;
+    padding: 10px;
+}
+
+.second-container {
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    border: 2px solid lightgray;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;              
+    margin: 0 auto;
+}
+
+.content {
+    width: 100%;
+    text-align: center;  
+}
+
+.edit-button {
+    height: 50px; 
+    width: 50px; 
+    margin-left: 20px;
+}
+
+.input-box-right-side {
+    border : none ;
+    border-bottom: 2px solid black; 
+    outline: none;            
+    padding: 5px 0;          
+    font-size: 16px;   
+}
+
+.second-container > div {
+    display: flex;
+    flex-direction: column; 
+}
+
+.second-container > div:nth-child(2) {
+    border-left: 2px solid lightgray;  
+}
+
+.create-form-button {
+    margin-top: 20px; 
+    background-color: rgb(3, 106, 3);
+    color: white;
+    max-width: 150px;
+}
+
+.input-box-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.input-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d3d3d3;
+    padding: 10px;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.input-box p {
+    margin: 0;
+    flex-grow: 1;
+}
+
+.edit-button, .delete-button {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.delete-button {
+    background-color: #ff6347;
+    color: white;
+}
+
+.edit-button:hover, .delete-button:hover {
+    opacity: 0.8;
+}
+
+.save-form-button{
+    background-color: rgb(12, 142, 12); 
+    color: white;
+}

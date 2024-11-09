@@ -15,7 +15,6 @@ const formSchema = new mongoose.Schema({
             },
             title: String,  
             placeholder: String, 
-            readOnly: { type: Boolean, default: true },
         },
     ],
 });
