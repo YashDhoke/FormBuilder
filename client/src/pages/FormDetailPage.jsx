@@ -53,7 +53,7 @@ export const FormDetailPage = () => {
 
     return (
         <div className="form-detail-page">
-            <div className = "second-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div className = "second-container2" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <h1>{form.title}</h1>
                 <div>
                     {form.inputs && form.inputs.length > 0 ? (

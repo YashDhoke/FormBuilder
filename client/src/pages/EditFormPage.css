@@ -23,12 +23,12 @@
     padding: 10px;
 }
 
-.second-container {
+.second-container3 {
     display: flex;
     gap: 10px;
     justify-content: space-evenly;
     border: 2px solid lightgray;
-    padding: 10px;
+    /* padding: 10px; */
     border-radius: 5px;
     width: 80%;              
     margin: 0 auto;
@@ -53,12 +53,12 @@
     font-size: 16px;   
 }
 
-.second-container > div {
+.second-container3 > div {
     display: flex;
     flex-direction: column; 
 }
 
-.second-container > div:nth-child(2) {
+.second-container3 > div:nth-child(2) {
     border-left: 2px solid lightgray;  
 }
 

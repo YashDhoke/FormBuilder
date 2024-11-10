@@ -9,6 +9,8 @@ export const EditFormPage = ({ onFormUpdate }) => {
     const [editingFieldId, setEditingFieldId] = useState(null);
     const [showPlaceholderInput, setShowPlaceholderInput] = useState(false);
     const [placeholderValue, setPlaceholderValue] = useState('');
+    const [showTitleInput, setShowTitleInput] = useState(false);
+    const [titleValue, setTitleValue] = useState('');
     const formEditorInputRef = useRef(null);
     const [showInputTypes, setShowInputTypes] = useState(false);
 
@@ -32,6 +34,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
     const handleEditClick = () => {
         setIsEditing(true);
         setShowPlaceholderInput(false);
+        setShowTitleInput(false);
         setPlaceholderValue("");
         if (formEditorInputRef.current) {
             formEditorInputRef.current.focus();
@@ -53,23 +56,55 @@ export const EditFormPage = ({ onFormUpdate }) => {
 
     const handleChangeClick = (id) => {
         setEditingFieldId(id);
-        const field = formData.inputs.find(field => field.id === id);
+        console.log("id", id);
+        const field = formData.inputs.find(field => field._id === id);
+        console.log("field", field);
         setPlaceholderValue(field?.placeholder || ""); 
-        setShowPlaceholderInput(true); 
+        setShowPlaceholderInput(true);
+        setShowTitleInput(true) ; 
+        setTitleValue(field?.title || "") ; 
 
         if (formEditorInputRef.current) {
             formEditorInputRef.current.focus();
         }
     };
 
+    useEffect(() => {
+        console.log("isEditing", isEditing);
+    }, [isEditing]);
+
     const handleInputChange = (e) => {
         if (showPlaceholderInput) {
+            setPlaceholderValue(e.target.value);
+            console.log("editingFieldId", editingFieldId);
             const updatedFields = formData.inputs.map((field) => {
-                if (field.id === editingFieldId) {
+                if (field._id === editingFieldId) {
+                    console.log("pass");
                     return { ...field, placeholder: e.target.value };
                 }
                 return field;
             });
+            console.log("updatedFields", updatedFields);
+            setFormData({ ...formData, inputs: updatedFields });
+        } else {
+            setFormData({ ...formData, title: e.target.value });
+        }
+    };
+
+    const handleInputChange2 = (e) => {
+        if (showTitleInput) {
+            setTitleValue(e.target.value);
+            console.log("editingFieldId", editingFieldId);
+            const updatedFields = formData.inputs.map((field) => {
+                if (field._id === editingFieldId) {
+                    console.log("pass");
+
+                    return { ...field, title: e.target.value };
+                }
+                return field;
+            });
+            console.log("updatedFields", updatedFields);
+            
             setFormData({ ...formData, inputs: updatedFields });
         } else {
             setFormData({ ...formData, title: e.target.value });
@@ -78,7 +113,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
 
     const handleSubmit = () => {
         const updatedFields = formData.inputs.map((field) => {
-            if (field.id === editingFieldId) {
+            if (field._id === editingFieldId) {
                 return { ...field, placeholder: placeholderValue };
             }
             return field;
@@ -89,7 +124,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
     };
 
     const handleDeleteField = (id) => {
-        const updatedFields = formData.inputs.filter(field => field.id !== id);
+        const updatedFields = formData.inputs.filter(field => field._id !== id);
         setFormData({ ...formData, inputs: updatedFields });
     };
 
@@ -114,7 +149,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
         <div className="container">
             <div className="content">
                 <p style={{ fontSize: "35px" }}>Edit Form</p>
-                <div className="second-container">
+                <div className="second-container3">
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                             <h2 style={{ marginBottom: "70px" }}>
@@ -127,15 +162,15 @@ export const EditFormPage = ({ onFormUpdate }) => {
                             {formData.inputs.length > 0 && (
                                 <div style={{ marginTop: "20px" }}>
                                     {formData.inputs.map((field) => (
-                                        <div key={field.id} className="input-box-container">
+                                        <div key={field._id} className="input-box-container">
                                             <div className="input-box">
                                                 <p style={{ color: "black", fontWeight: "bold", fontSize: "16px" }}>
                                                     {field.title || 'Untitled Field'}
                                                 </p>
-                                                <button className="edit-button-2" onClick={() => handleChangeClick(field.id)}>
+                                                <button className="edit-button-2" onClick={() => {setIsEditing(false); handleChangeClick(field._id);}}>
                                                     Change
                                                 </button>
-                                                <button className="delete-button" onClick={() => handleDeleteField(field.id)}>
+                                                <button className="delete-button" onClick={() => handleDeleteField(field._id)}>
                                                     Delete
                                                 </button>
                                             </div>
@@ -165,7 +200,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
                     <div style={{ marginLeft: "50px" }}>
                         <div style={{ marginLeft: "100px" }}>
                             <h2>Form Editor</h2>
-                            {!isEditing && <p>Select to see editor</p>}
+                            {!isEditing && !showTitleInput && !showPlaceholderInput && <p>Select to see editor</p>}
 
                             {isEditing && (
                                 <input
@@ -176,6 +211,19 @@ export const EditFormPage = ({ onFormUpdate }) => {
                                     onChange={handleInputChange}
                                     value={formData.title}
                                 />
+                            )}
+
+                            {showTitleInput && (
+                                <div>
+                                    <input
+                                        type="text"
+                                        placeholder="Title"
+                                        
+                                        value={titleValue}
+                                        onChange={(e) => handleInputChange2(e)}
+                                        className="input-box-right-side"
+                                    />
+                                </div>
                             )}
 
                             {showPlaceholderInput && (
