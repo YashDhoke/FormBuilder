@@ -50,6 +50,11 @@ export const CreateForm = () => {
     };
 
     const handleAddInputClick = () => {
+        console.log("inputData", inputFields.length);
+        if(inputFields.length === 20){
+            alert('You cannot add more than 20 inputs');
+            return;
+        }
         setShowInputTypes(!showInputTypes);
     };
 

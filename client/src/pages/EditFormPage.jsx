@@ -205,6 +205,7 @@ export const EditFormPage = ({ onFormUpdate }) => {
                             {isEditing && (
                                 <input
                                     type="text"
+                                    aria-label={"Title"}
                                     placeholder="Title"
                                     className="input-box-right-side"
                                     ref={formEditorInputRef}

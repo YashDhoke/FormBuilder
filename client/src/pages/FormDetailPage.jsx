@@ -10,6 +10,7 @@ export const FormDetailPage = () => {
     const [focusedIndex, setFocusedIndex] = useState(null); 
     const [inputValues, setInputValues] = useState({}); 
 
+
     useEffect(() => {
         const fetchForm = async () => {
             try {
@@ -35,7 +36,7 @@ export const FormDetailPage = () => {
 
         alert('Form submitted! Check the console for the submitted data.');
     };
-
+console.log("form", form);
     const handleInputChange = (index, value) => {
         setInputValues(prevValues => ({
             ...prevValues,
@@ -62,6 +63,7 @@ export const FormDetailPage = () => {
                                 <label>{input.title}</label>
                                 <InputField 
                                     title={input.title}
+                                    type={input.type}
                                     placeholder={input.placeholder}
                                     value={inputValues[index] || ""}
                                     onChange={(value) => handleInputChange(index, value)}
@@ -81,10 +83,11 @@ export const FormDetailPage = () => {
     );
 };
 
-const InputField = ({ title, placeholder, value, onChange, isFocused, onFocus, onBlur }) => {
+const InputField = ({ title, type, placeholder, value, onChange, isFocused, onFocus, onBlur }) => {
     return (
         <input
-            type="text"
+            type={type}
+            min={type === "number" ? 0 : undefined}
             value={value}
             placeholder={isFocused ? placeholder : title}
             onFocus={() => {
